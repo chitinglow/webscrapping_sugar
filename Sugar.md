@@ -29,7 +29,7 @@ sugar %<>%
   html_nodes(xpath = '//*[@id="mw-content-text"]/div/table[2]') %>%
   .[[1]] %>%
   html_table(fill = T)
-str(sugar) # 查看数据集的基本数据结构
+str(sugar)
 DT::datatable(sugar)
 ```
 
