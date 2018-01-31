@@ -1,0 +1,56 @@
+---
+title: "First try webscrapping"
+output: github_document
+---
+
+#Objective
+
+ The objective of the current project is to learning scraping html table from Wikipedia
+ 
+#Source of data
+ https://en.wikipedia.org/wiki/Sugar#Consumption
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+#loading libraries
+library(rvest)
+library(ggplot2)
+library(dplyr)
+library(scales)
+library(maps)
+library(magrittr)
+library(reshape2)
+library(varhandle)
+
+#set up the data
+url <- "https://en.wikipedia.org/wiki/Sugar#Consumption"
+sugar <- read_html(url)
+sugar %<>%
+  html_nodes(xpath = '//*[@id="mw-content-text"]/div/table[2]') %>%
+  .[[1]] %>%
+  html_table(fill = T)
+str(sugar) # 查看数据集的基本数据结构
+DT::datatable(sugar)
+```
+
+```{r}
+#data processing
+#remember the names
+n <- sugar$Country
+
+# transpose all but the first column (name)
+sugar <- as.data.frame(t(sugar[,-1]))
+colnames(sugar) <- n
+```
+
+  Data was processing outside using Excel and reload it into R.
+  
+```{r}
+sugar1 <- read.csv("~/Desktop/learning/Wechat/sugar.csv", stringsAsFactors=FALSE)
+sugar1
+sugar1$Country <- as.factor(sugar1$Country)
+str(sugar1)
+ggplot(sugar1, aes(x = Date, y = Total, fill= Country)) + 
+  geom_bar(stat = "identity", position = 'dodge') + labs(title = "World sugar consumption (1000 metric tons)", x = "Years", y = "Sugar consumption") + 
+  theme_bw()
+```
+
