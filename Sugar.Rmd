@@ -49,6 +49,8 @@ sugar1 <- read.csv("~/Desktop/learning/Wechat/sugar.csv", stringsAsFactors=FALSE
 sugar1
 sugar1$Country <- as.factor(sugar1$Country)
 str(sugar1)
+
+#visualise the data
 ggplot(sugar1, aes(x = Date, y = Total, fill= Country)) + 
   geom_bar(stat = "identity", position = 'dodge') + labs(title = "World sugar consumption (1000 metric tons)", x = "Years", y = "Sugar consumption") + 
   theme_bw()

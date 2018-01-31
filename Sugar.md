@@ -99,6 +99,7 @@ str(sugar1)
     ##  $ Country: Factor w/ 6 levels "Brazil","China",..: 4 4 4 4 4 4 3 3 3 3 ...
 
 ``` r
+#visualise the data
 ggplot(sugar1, aes(x = Date, y = Total, fill= Country)) + 
   geom_bar(stat = "identity", position = 'dodge') + labs(title = "World sugar consumption (1000 metric tons)", x = "Years", y = "Sugar consumption") + 
   theme_bw()
